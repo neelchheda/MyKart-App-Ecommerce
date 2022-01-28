@@ -23,7 +23,7 @@ const Header = () => {
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home</Link>
         </Item>
-      <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username" className="float-right">
+      <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username" >
         
           <Item key="setting:1">Dashboard</Item>
           <Item key="setting:2" >Logout</Item>
@@ -32,7 +32,7 @@ const Header = () => {
       <Item key="login" icon={<UserOutlined  />} className="float-right">
       <Link to="/login">Login</Link>
         </Item>
-      <Item key="register" icon={<UserAddOutlined />}>
+      <Item key="register" icon={<UserAddOutlined />} className="float-right">
       <Link to="/register">Register</Link>
         </Item>
       
