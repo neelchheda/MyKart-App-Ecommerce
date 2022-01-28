@@ -1,29 +1,30 @@
-
-import React,{ useState } from "react";
+import React, { useState } from "react";
+import {auth} from '../../firebase';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
-  const [email,setEmail]=useState('');
-  const handleSubmit=()=>{
+  const [email, setEmail] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  }
-  const registerForm  = () => (
-  <form onSubmit={handleSubmit}>
-      <input 
-      type="email" 
-      className="form-control" 
-      value={email}
-      onChange={(e)=> setEmail(e.target.value)}
-      autoFocus 
-      placeholder="Email Address"
-      
+
+  };
+  const registerForm = () => (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        className="form-control"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        autoFocus
+        placeholder="Email Address"
       />
 
-
       <button type="submit" className="btn btn-raised btn-primary mt-2">
-        Register 
+        Register
       </button>
-      
-  </form> 
+    </form>
   );
   return (
     <div className="container p-5">
