@@ -30,7 +30,7 @@ const Header = () => {
         
       </SubMenu>
       <Item key="login" icon={<UserOutlined  />} className="float-right">
-      <Link to="/login">Lgin</Link>
+      <Link to="/login">Login</Link>
         </Item>
       <Item key="register" icon={<UserAddOutlined />}>
       <Link to="/register">Register</Link>
