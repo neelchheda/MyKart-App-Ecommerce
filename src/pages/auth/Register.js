@@ -28,7 +28,7 @@ const Register = () => {
         type="email"
         className="form-control"
         value={email}
-      outline="none"
+        outline="none"
         onChange={(e) => setEmail(e.target.value)}
         autoFocus
         placeholder="Email Address"
@@ -44,7 +44,7 @@ const Register = () => {
       <div className="row">
         <div className="col-md-6 offset-md-3 mt-10">
           <h4>Register</h4>
-          <ToastContainer/>
+          <ToastContainer />
           {registerForm()}
         </div>
       </div>
