@@ -1,10 +1,15 @@
-import { bindActionCreators } from "redux";
 
-export function userReducer(state = null,ation){
-    switch(bindActionCreators.type){
 
-        
-    }
+export function userReducer(state = null,action){
+    switch(action.type){
+        case "LOGGED_IN_USER":
+            return action.payload;
+        case "LOGOUT":
+            return action.payload;
+        default:
+            return state;
+    }   
 
 
 }
+
