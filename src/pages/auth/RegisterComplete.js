@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 
@@ -6,23 +6,33 @@ const RegisterComplete = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  useState(() => {
+    setEmail(window.localStorage.getItem("emailForRegistration"));
+  }, []);
 
-  useState(() =>{
-    setEmail(window.localStorage.getItem('emailForRegistration'))
-  },[])
   const handleSubmit = async (e) => {
     e.preventDefault();
   };
+
   const completeRegistrationForm = () => (
     <form onSubmit={handleSubmit}>
       <input
         type="email"
         className="form-control"
         value={email}
-        
         disabled
         placeholder="Email Address"
       />
+
+      <input
+        type="password"
+        className="form-control mt-3"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        autoFocus
+      />
+      <br></br>
 
       <button type="submit" className="btn btn-raised btn-primary mt-2">
         Register
