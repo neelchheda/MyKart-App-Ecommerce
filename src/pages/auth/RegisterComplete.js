@@ -12,6 +12,19 @@ const RegisterComplete = ({ history }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //password validation
+    if(!email || !password){
+      toast.error("Email and password is required to sign in");
+      setPassword("");
+      return;
+    }
+
+    if(password.length<6){
+      toast.error("Password shoud be at least 6 characters");
+      setPassword("");
+      return;
+    }
     try{
       const result = await auth.signInWithEmailLink(
         email,
@@ -31,12 +44,15 @@ const RegisterComplete = ({ history }) => {
         const idTokenResult = await user.getIdTokenResult();
         //Redux Store.
         console.log("user",user,"idTokenResult",idTokenResult)
+        
         //Redirect.
-        history.push('/');
+        // history.push('/');
       }
     }catch(error){
       console.log(error);
-      toast.error(error.messaage);
+      toast.error(
+        error
+      );
     }
   };
 
