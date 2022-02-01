@@ -8,7 +8,7 @@ const RegisterComplete = ({ history }) => {
 
 
   useState(() =>{
-    console.log(window.localStorage.getItem('emailForRefustration'))
+    setEmail(window.localStorage.getItem('emailForRegistration'))
   },[])
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,9 +19,8 @@ const RegisterComplete = ({ history }) => {
         type="email"
         className="form-control"
         value={email}
-        outline="none"
-        onChange={(e) => setEmail(e.target.value)}
-        autoFocus
+        
+        disabled
         placeholder="Email Address"
       />
 
@@ -34,9 +33,9 @@ const RegisterComplete = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3 mt-10">
-          <h4>Register</h4>
+          <h4>Register with password</h4>
 
-          {registerForm()}
+          {completeRegistrationForm()}
         </div>
       </div>
     </div>
