@@ -16,9 +16,22 @@ const RegisterComplete = ({ history }) => {
       const result = await auth.signInWithEmailLink(
         email,
         window.location.href
+        
+      );
+      toast.success(
+        `Registration Successfull`
       );
       // console.log("RESULT",result)
-
+      if(result.user.emailVerified){
+        //remove the email id from local storage because itsnot needed anymore.
+        //Get user id token which we will use  woth backend.
+        //Redux Store.
+        //Redirect.
+        window.localStorage.removeItem("emailForRegistration");
+        let user = auth.currentUser
+        await user.updatePassword(password);
+        const idTokenResult = await user.getIdTokenResult();
+      }
     }catch(error){
       console.log(error);
       toast.error(error.messaage);
