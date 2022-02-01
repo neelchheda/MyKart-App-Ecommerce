@@ -24,13 +24,15 @@ const RegisterComplete = ({ history }) => {
       // console.log("RESULT",result)
       if(result.user.emailVerified){
         //remove the email id from local storage because itsnot needed anymore.
-        //Get user id token which we will use  woth backend.
-        //Redux Store.
-        //Redirect.
         window.localStorage.removeItem("emailForRegistration");
+        //Get user id token which we will use  woth backend.
         let user = auth.currentUser
         await user.updatePassword(password);
         const idTokenResult = await user.getIdTokenResult();
+        //Redux Store.
+        console.log("user",user,"idTokenResult",idTokenResult)
+        //Redirect.
+        history.push('/');
       }
     }catch(error){
       console.log(error);
