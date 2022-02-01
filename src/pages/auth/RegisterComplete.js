@@ -15,7 +15,7 @@ const RegisterComplete = ({ history }) => {
 
     //password validation
     if(!email || !password){
-      toast.error("Email and password is required to sign in");
+      toast.error("Check your credentials");
       setPassword("");
       return;
     }
@@ -46,7 +46,7 @@ const RegisterComplete = ({ history }) => {
         console.log("user",user,"idTokenResult",idTokenResult)
         
         //Redirect.
-        // history.push('/');
+        history.push('/');
       }
     }catch(error){
       console.log(error);
