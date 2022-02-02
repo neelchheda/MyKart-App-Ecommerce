@@ -10,7 +10,38 @@ import Home from "./pages/Home";
 import Header from "./components/nav/header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 
+import {auth} from './firebase';
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+
+
 const App = () => {
+const dispatch = useDispatch();
+
+//to check firebasefromauth
+useEffect(()=>{
+  const unsubscribe= auth.onAuthStateChanged(async(user) =>{
+
+    if(user){
+
+      const idTokenResult = await user.getIdToken();
+      console.log("user",user);
+      dispatch({
+        type:'LOGGED_IN_USER',
+        payload:{
+          email:user.email,
+          token:idTokenResult,
+        },
+      });
+    }
+  });
+  //cleanup
+  return()=> unsubscribe();
+
+},[])
+
+
+
   return (
     <>
       <Router>
