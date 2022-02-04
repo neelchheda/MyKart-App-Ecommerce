@@ -1,27 +1,44 @@
 import React, { useState } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
-import {Button} from 'antd';
-import {MailOutlined} from '@ant-design/icons';
+import { Button } from "antd";
+import { MailOutlined } from "@ant-design/icons";
+import {useDispatch} from 'react-redux';
 
-const Login = () => {
+
+
+const Login = ({history}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading,setLoading] = useState(false);
+
+  let dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.table(email,password);
-    // const config = {
-    //   url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
-    //   handleCodeInApp: true,
-    // };
-    // await auth.sendSignInLinkToEmail(email, config);
-    // toast.success(
-    //   `Email is successfully sent to ${email}. Click the link to complete your registration`
-    // );
-    // //save user email to your local storage
-    // window.localStorage.setItem("emailForRegistration", email);
-    // //Clear the state
-    // setEmail("");
+    setLoading(true)
+    try{
+        const result = await auth.signInWithEmailAndPassword(email,password);
+        // console.log(result)
+      const {user} = result;
+      const idTokenResult = await user.getIdTokenResult();
+      dispatch({
+        type:'LOGGED_IN_USER',
+        payload:{
+          email:user.email,
+          token:idTokenResult,
+        },
+      });
+      toast.success(
+        `Login Successfull`
+      );
+      history.push('/');
+    }
+    catch(error){
+      console.log(error);
+      toast.error(error.message);
+      setLoading(false);
+    }
+    
   };
   const loginForm = () => (
     <form onSubmit={handleSubmit}>
@@ -45,17 +62,17 @@ const Login = () => {
       />
 
       <Button
-      onClick = {handleSubmit}
-      className="mt-3"
-      type ="primary"
-      block
-      shape="round"
-      icon={<MailOutlined />}
-      size="large"
-      disabled={!email || password.length<6}
-          >
+        onClick={handleSubmit}
+        className="mt-3"
+        type="primary"
+        block
+        shape="round"
+        icon={<MailOutlined />}
+        size="large"
+        disabled={!email || password.length < 6}
+      >
         Login
-        </Button>
+      </Button>
     </form>
   );
   return (
