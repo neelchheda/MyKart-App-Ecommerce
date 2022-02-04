@@ -34,7 +34,11 @@ const Register = () => {
         placeholder="Email Address"
       />
 
-      <button type="submit" className="btn btn-raised btn-primary mt-2">
+      <button 
+      type="submit" 
+      className="btn btn-raised btn-primary mt-2"
+      disabled={!email }
+      >
         Register
       </button>
     </form>

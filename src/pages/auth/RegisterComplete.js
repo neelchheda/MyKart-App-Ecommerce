@@ -76,7 +76,11 @@ const RegisterComplete = ({ history }) => {
       />
       <br></br>
 
-      <button type="submit" className="btn btn-raised btn-primary mt-2">
+      <button 
+      type="submit" 
+      className="btn btn-raised btn-primary mt-2"
+      disabled={!email || password.length<6}
+      >
         Register
       </button>
     </form>
