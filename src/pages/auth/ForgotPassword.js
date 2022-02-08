@@ -8,8 +8,13 @@ const ForgotPassword = ({hostory})=>{
     const [loading,setLoading]=useState(false)
 
     return <div className="container col-md-6 offset-md-3 p-5">
-        Form to get user email
-
+        
+        
+        <h4>Forgot Password</h4>
+        <form onSubmit={handleSubmit}>
+          
+        </form>
+        
 
     </div>
 }
