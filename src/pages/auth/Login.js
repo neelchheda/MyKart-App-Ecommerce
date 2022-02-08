@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../../firebase";
+import { auth , gAuthProvider} from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
@@ -34,8 +34,26 @@ const Login = ({ history }) => {
       setLoading(false);
     }
   };
-  const googleLogin = () => {
-    //
+  const googleLogin = async () => {
+    auth.signInWithPopup(gAuthProvider)
+    .then(async(result)=>{
+      const {user} = result
+      const idTokenResult = await user.getIdTokenResult();
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          email: user.email,
+          token: idTokenResult,
+        },
+      });
+      toast.success(`Login Successfull`);
+      history.push("/");
+
+    })
+    .catch((error)=>{
+      console.log(error)
+      toast.error(error.message)
+    })
   };
 
   const loginForm = () => (
@@ -77,11 +95,8 @@ const Login = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3 mt-10">
-          {loading ? (
-            <h4>Login</h4>
-          ) : (
-            <h4 className="text-danger">Loading...</h4>
-          )}
+          {loading ? (<h4 className="text-danger">Loading...</h4>) : (<h4>Login</h4>)
+          }
           {loginForm()}
 
           <Button

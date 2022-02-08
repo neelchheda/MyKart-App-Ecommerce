@@ -11,8 +11,8 @@ import { Link } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { useDispatch } from "react-redux";
-import {useHistory} from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const { SubMenu, Item } = Menu;
 
@@ -20,6 +20,7 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
   let dispatch = useDispatch();
   let history = useHistory();
+  let { user } = useSelector((state) => ({ ...state }));
 
   const handleClick = (e) => {
     setCurrent(e.key);
@@ -28,16 +29,16 @@ const Header = () => {
   const logout = () => {
     firebase.auth().signOut();
     dispatch({
-      type:"LOGOUT",
-      payload:null
+      type: "LOGOUT",
+      payload: null,
     });
-    history.push("/login")
+    history.push("/login");
   };
 
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
       <Item key="home" icon={<AppstoreOutlined />}>
-        <Link to="/">Home</Link>
+        <Link to="/">Home - {JSON.stringify(user)} </Link>
       </Item>
       <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
         <Item key="setting:1">Dashboard</Item>
@@ -46,9 +47,11 @@ const Header = () => {
           Logout
         </Item>
       </SubMenu>
-      <Item key="login" icon={<UserOutlined />} className="float-right">
-        <Link to="/login">Login</Link>
-      </Item>
+      {!user && (
+        <Item key="login" icon={<UserOutlined />} className="float-right">
+          <Link to="/login">Login</Link>
+        </Item>
+      )}
       <Item key="register" icon={<UserAddOutlined />} className="float-right">
         <Link to="/register">Register</Link>
       </Item>
