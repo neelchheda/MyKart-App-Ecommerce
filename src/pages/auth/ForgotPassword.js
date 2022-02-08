@@ -7,11 +7,26 @@ const ForgotPassword = ({ hostory }) => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) =>{
+  const handleSubmit = async(e) =>{
     e.preventDefault();
-    //
+    const config = {
+      url: process.env.REACT_APP_FORGOT_PASSWORD_REDIRECT,
+      handleCodeInApp: true,
+    };
+    setLoading(true);
 
-  }
+    await auth.sendPasswordResetEmail(email,config)
+    .then(()=>{
+      setEmail('')
+      setLoading(false)
+      toast.success('Check your email for password reset link')
+    })
+    .catch((error)=>{
+      setLoading(false)
+      toast.error(error.message)
+      console.log(error)
+    });
+  };
 
   return (
     <div className="container col-md-6 offset-md-3 p-5">

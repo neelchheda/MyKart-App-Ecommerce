@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Menu } from "antd";
+import { toast } from "react-toastify";
 import {
   AppstoreOutlined,
   UserOutlined,
@@ -32,7 +33,9 @@ const Header = () => {
       type: "LOGOUT",
       payload: null,
     });
+    toast.success(`Logout Successfull`);
     history.push("/login");
+    
   };
 
   return (
