@@ -40,21 +40,22 @@ const Header = () => {
       <Item key="home" icon={<AppstoreOutlined />}>
         <Link to="/">Home - {JSON.stringify(user)} </Link>
       </Item>
-      <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
-        <Item key="setting:1">Dashboard</Item>
-        <Item key="setting:2">My Cart</Item>
-        <Item icon={<LogoutOutlined />} onClick={logout}>
-          Logout
-        </Item>
-      </SubMenu>
+      
       {!user && (
         <Item key="login" icon={<UserOutlined />} className="float-right">
           <Link to="/login">Login</Link>
         </Item>
       )}
-      <Item key="register" icon={<UserAddOutlined />} className="float-right">
+      {!user && (<Item key="register" icon={<UserAddOutlined />} className="float-right">
         <Link to="/register">Register</Link>
-      </Item>
+      </Item>)}
+      {user && (<SubMenu key="SubMenu" icon={<SettingOutlined />} title="Username">
+        <Item key="setting:1">Dashboard</Item>
+        <Item key="setting:2">My Cart</Item>
+        <Item icon={<LogoutOutlined />} onClick={logout}>
+          Logout
+        </Item>
+      </SubMenu>)}
     </Menu>
   );
 };
