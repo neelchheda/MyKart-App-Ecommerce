@@ -17,4 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   address: String,
 //   wishlist: Array[{ type: ObjectId, ref: "Product " }],
-});
+}, {timestamps:true});
+
+module.exports= mongoose.model('User',userSchema)
+
