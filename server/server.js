@@ -4,9 +4,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
-const fs = require("fs"); 
+const {readdirSync} = require("fs"); 
 
-const authRoutes = require("./routes/auth");
 
 // app
 const app = express();
@@ -25,9 +24,10 @@ app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "2mb" }));
 app.use(cors());
 
-//routes middleware
- app.use('/api' , authRoutes);
- fs.readdirSync('./routes').map()
+
+
+ //used for reading the files synchronously and the map fnctionswill map all the files when there are more files in that direc
+ readdirSync('./routes').map((r)=>app.use("/api", require("./routes/" + r)));
 
 // port
 const port = process.env.PORT || 8000;
