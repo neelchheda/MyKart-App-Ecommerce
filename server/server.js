@@ -31,7 +31,7 @@ app.use(cors());
 // route
 app.get("/api", (req, res) => {
   res.json({
-    data: "hey you hit node API",
+    data: "hey you hit node API U",
   });
 });
 
