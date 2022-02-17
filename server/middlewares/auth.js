@@ -1,5 +1,6 @@
 const admin=require("../firebase/index")
 
-exports.authCheck=()=>{
-    console.log(req.headers);  //get the token
+exports.authCheck=(req,res,next)=>{
+    console.log(req.headers);           //get the token
+    next(); 
 }
