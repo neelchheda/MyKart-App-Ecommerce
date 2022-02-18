@@ -1,58 +1,85 @@
 import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+
+const createOrUpdateUser = async (authtoken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/create-or-update-user`,
+    {},
+    {
+      headers: {
+        authtoken: authtoken,
+      },
+    }
+  );
+};
 
 const RegisterComplete = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { user } = useSelector((state) => ({ ...state }));
+
   useEffect(() => {
     setEmail(window.localStorage.getItem("emailForRegistration"));
   }, []);
-
+  let dispatch = useDispatch();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     //password validation
-    if(!email || !password){
+    if (!email || !password) {
       toast.error("Check your credentials");
       setPassword("");
       return;
     }
 
-    if(password.length<6){
+    if (password.length < 6) {
       toast.error("Password shoud be at least 6 characters");
       setPassword("");
       return;
     }
-    try{
+    try {
       const result = await auth.signInWithEmailLink(
         email,
         window.location.href
-        
       );
-      toast.success(
-        `Registration Successfull`
-      );
+      toast.success(`Registration Successfull`);
       // console.log("RESULT",result)
-      if(result.user.emailVerified){
+      if (result.user.emailVerified) {
         //remove the email id from local storage because itsnot needed anymore.
         window.localStorage.removeItem("emailForRegistration");
         //Get user id token which we will use  woth backend.
-        let user = auth.currentUser
+        let user = auth.currentUser;
         await user.updatePassword(password);
         const idTokenResult = await user.getIdTokenResult();
         //Redux Store.
-        console.log("user",user,"idTokenResult",idTokenResult)
-        
+        console.log("user", user, "idTokenResult", idTokenResult);
+        createOrUpdateUser(idTokenResult.token)
+        .then((res) => {
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: res.data.name,
+              email: res.data.email,
+              token: idTokenResult,
+              role: res.data.role,
+              _id: res.data._id,
+            },
+          });
+          toast.success(`Login Successfull`);
+          history.push("/");
+        })
+        .catch();
         //Redirect.
-        history.push('/');
+        history.push("/");
       }
-    }catch(error){
+    } catch (error) {
       console.log(error);
-      toast.error(
-        error
-      );
+      toast.error(error);
     }
   };
 
@@ -76,10 +103,10 @@ const RegisterComplete = ({ history }) => {
       />
       <br></br>
 
-      <button 
-      type="submit" 
-      className="btn btn-raised btn-primary mt-2"
-      disabled={!email || password.length<6}
+      <button
+        type="submit"
+        className="btn btn-raised btn-primary mt-2"
+        disabled={!email || password.length < 6}
       >
         Register
       </button>
