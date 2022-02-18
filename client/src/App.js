@@ -23,7 +23,7 @@ const App = () => {
       if (user) {
         const idTokenResult = await user.getIdToken();
         console.log("user", user);
-        createOrUpdateUser(idTokenResult.token)
+        currentUser(idTokenResult.token)
           .then((res) => {
             dispatch({
               type: "LOGGED_IN_USER",
