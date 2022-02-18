@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { createOrUpdateUser } from "../../functions/auth";
 
+
+
 const Login = ({ history }) => {
   const [email, setEmail] = useState("neelchheda45@gmail.com");
   const [password, setPassword] = useState("123789");
@@ -21,6 +23,15 @@ const Login = ({ history }) => {
   }, [user]);
 
   let dispatch = useDispatch();
+
+  const roleBasedRedirect = (res) => {
+    if (res.data.role === "admin") {
+      history.push("/admin/dashboard");
+    }else{
+      history.push("user/history");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -43,11 +54,12 @@ const Login = ({ history }) => {
             },
           });
           toast.success(`Login Successfull`);
-          history.push("/");
+          // history.push("/");
+          roleBasedRedirect(res);
         })
-        .catch((err)=>console.log(err));
+        .catch((err) => console.log(err));
 
-      history.push("/");
+      // history.push("/");
     } catch (error) {
       console.log(error);
       toast.error(error.message);
@@ -73,11 +85,13 @@ const Login = ({ history }) => {
               },
             });
             toast.success(`Login Successfull`);
-            history.push("/");
+            // history.push("/");
+            roleBasedRedirect(res);
+
           })
           .catch();
         toast.success(`Login Successfull`);
-        history.push("/");
+        // history.push("/");
       })
       .catch((error) => {
         console.log(error);
