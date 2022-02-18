@@ -12,6 +12,7 @@ import {auth} from './firebase';
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import History from "./pages/user/History";
+import UserRoute from "./components/routes/UserRoute";
 
 
 const App = () => {
@@ -56,7 +57,7 @@ const App = () => {
           <Route exact path="/register" component={Register} />
           <Route exact path="/register/complete" component={RegisterComplete} />
           <Route exact path="/forgot/password" component={ForgotPassword} />
-          <Route exact path="/user/history" component={History} />
+          <UserRoute exact path="/user/history" component={History} />
 
 
         </Switch>
