@@ -8,7 +8,7 @@ const UserRoute = ({ children, ...rest }) => {
   return user && user.token ? (
     <Route {...rest} render={() => children} />
   ) : (
-    <h1 className="text-danger"> Loading...</h1>
+    <h1 className="text-dagner">Loading...</h1>
   );
 };
 
