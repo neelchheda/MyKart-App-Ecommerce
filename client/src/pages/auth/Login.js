@@ -1,20 +1,23 @@
 import React, { useState } from "react";
-import { auth , gAuthProvider} from "../../firebase";
+import { auth, gAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import {Link} from 'react-router-dom';
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import axios from "axios";
 
-const createOrUpdateUser =async(authtoken)=>{
-return await axios.post(
-  `${process.env.REACT_APP_API}/create-or-update-user`,{}, {
-  headers:{
-    authtoken:authtoken,  //if you hae same key and value then you can also write only once for example "authoken" instead of "authtoke:authtoken".
-  }
-});   
-}
+const createOrUpdateUser = async (authtoken) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/create-or-update-user`,
+    {},
+    {
+      headers: {
+        authtoken:authtoken, 
+      },
+    }
+  );
+};
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("");
@@ -32,8 +35,8 @@ const Login = ({ history }) => {
       const idTokenResult = await user.getIdTokenResult();
 
       createOrUpdateUser(idTokenResult.token)
-      .then((res)=>console.log("CREATE OR UPDATE RESPONSE",res))
-      .catch()
+        .then((res) => console.log("CREATE OR UPDATE RESPONSE", res))
+        .catch();
 
       dispatch({
         type: "LOGGED_IN_USER",
@@ -51,25 +54,25 @@ const Login = ({ history }) => {
     }
   };
   const googleLogin = async () => {
-    auth.signInWithPopup(gAuthProvider)
-    .then(async(result)=>{
-      const {user} = result
-      const idTokenResult = await user.getIdTokenResult();
-      dispatch({
-        type: "LOGGED_IN_USER",
-        payload: {
-          email: user.email,
-          token: idTokenResult,
-        },
+    auth
+      .signInWithPopup(gAuthProvider)
+      .then(async (result) => {
+        const { user } = result;
+        const idTokenResult = await user.getIdTokenResult();
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            email: user.email,
+            token: idTokenResult,
+          },
+        });
+        toast.success(`Login Successfull`);
+        history.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
       });
-      toast.success(`Login Successfull`);
-      history.push("/");
-
-    })
-    .catch((error)=>{
-      console.log(error)
-      toast.error(error.message)
-    })
   };
 
   const loginForm = () => (
@@ -91,7 +94,7 @@ const Login = ({ history }) => {
         outline="none"
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Passsword"
-        disabled={!email }
+        disabled={!email}
       />
 
       <Button
@@ -112,8 +115,11 @@ const Login = ({ history }) => {
     <div className="container p-5">
       <div className="row">
         <div className="col-md-6 offset-md-3 mt-10">
-          {loading ? (<h4 className="text-danger">Loading...</h4>) : (<h4>Login</h4>)
-          }
+          {loading ? (
+            <h4 className="text-danger">Loading...</h4>
+          ) : (
+            <h4>Login</h4>
+          )}
           {loginForm()}
 
           <Button
@@ -127,7 +133,7 @@ const Login = ({ history }) => {
           >
             Login with Google
           </Button>
-          <Link to ="/forgot/password" className="float-end text-primary mt-2">
+          <Link to="/forgot/password" className="float-end text-primary mt-2">
             Forgot Password?
           </Link>
         </div>
