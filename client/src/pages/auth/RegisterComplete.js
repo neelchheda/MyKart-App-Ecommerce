@@ -61,7 +61,7 @@ const RegisterComplete = ({ history }) => {
             toast.success(`Login Successfull`);
             history.push("/");
           })
-          .catch();
+          .catch((err)=>console.log(err));
         //Redirect.
         history.push("/");
       }

@@ -45,7 +45,7 @@ const Login = ({ history }) => {
           toast.success(`Login Successfull`);
           history.push("/");
         })
-        .catch();
+        .catch((err)=>console.log(err));
 
       history.push("/");
     } catch (error) {

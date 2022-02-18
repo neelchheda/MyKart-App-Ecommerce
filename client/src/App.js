@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Header from "./components/nav/header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword"
+import {currentUser} from "./functions/auth";
 
 
 import {auth} from './firebase';
@@ -28,15 +29,21 @@ useEffect(()=>{
 
       const idTokenResult = await user.getIdToken();
       console.log("user",user);
-      dispatch({
-        type:'LOGGED_IN_USER',
-        payload:{
-          email:user.email,
-          token:idTokenResult,
-        },
-      });
-    }
-  });
+      createOrUpdateUser(idTokenResult.token)
+          .then((res) => {
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: {
+                name: res.data.name,
+                email: res.data.email,
+                token: idTokenResult,
+                role: res.data.role,
+                _id: res.data._id,
+              },
+            });
+            
+          })
+          .catch((err)=>console.log(err));
   //cleanup
   return()=> unsubscribe();
 
