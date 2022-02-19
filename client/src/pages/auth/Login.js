@@ -84,13 +84,13 @@ const Login = ({ history }) => {
                 _id: res.data._id,
               },
             });
-            toast.success(`Login Successfull`);
             // history.push("/");
             roleBasedRedirect(res);
-
+            toast.success(`Login Successfull`);
           })
           .catch();
-        toast.success(`Login Successfull`);
+          
+
         // history.push("/");
       })
       .catch((error) => {
