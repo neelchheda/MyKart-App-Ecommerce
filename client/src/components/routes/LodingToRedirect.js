@@ -9,7 +9,7 @@ const LoadingToRedirect = ()=>{
         const interval = setInterval(()=>{
             setCount((currentCount)=>--currentCount)
             //
-        },500);
+        },1000);
         //redirect once count = 0
         count === 0 && history.push('/')
         //cleanup
@@ -17,6 +17,7 @@ const LoadingToRedirect = ()=>{
     },[count]);
     return (
         <div className='container p-5 text-center'>
+            <h4>Please Login to your account</h4>
             <p>Redirecting you in {count} seconds</p>
         </div>
     )
