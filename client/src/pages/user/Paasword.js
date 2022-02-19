@@ -18,10 +18,10 @@ const Password = () => {
         //
         setLoading(false);
         setPassword("");
-        toast.success("Password Updated")
+        toast.success("Password Updated");
       })
       .catch((err) => {
-        setLoading(false)
+        setLoading(false);
         toast.error(err.message);
       });
   };
@@ -39,12 +39,12 @@ const Password = () => {
           disabled={loading}
           value={password}
         />
-        <button 
-        className="btn btn-primary mt-2"
-        disabled={!password|| password.length<6|| loading}
+        <button
+          className="btn btn-primary mt-2"
+          disabled={!password || password.length < 6 || loading}
         >
-            Submit
-            </button>
+          Submit
+        </button>
       </div>
     </form>
   );
@@ -56,8 +56,12 @@ const Password = () => {
           <UserNav />
         </div>
         <div className="col-md-4 ">
-            {loading ? <h4 className="danger" >Loading...</h4> : <h4>Password Update</h4>}
-          
+          {loading ? (
+            <h4 className="text-danger">Loading...</h4>
+          ) : (
+            <h4>Password Update</h4>
+          )}
+
           {passwordUpdateForm()}
         </div>
       </div>

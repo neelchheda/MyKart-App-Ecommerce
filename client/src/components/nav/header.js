@@ -35,7 +35,6 @@ const Header = () => {
     });
     toast.success(`Logout Successfull`);
     history.push("/login");
-    
   };
 
   return (
@@ -58,10 +57,12 @@ const Header = () => {
         <SubMenu
           key="SubMenu"
           icon={<SettingOutlined />}
-          title={user.email && user.email.split('@')[0]}
+          title={user.email && user.email.split("@")[0]}
           className="float-end"
         >
-          <Item key="setting:1">Dashboard</Item>
+          <Item key="setting:1">
+            <Link to="/user/history">Dashboard</Link>
+          </Item>
           <Item key="setting:2">My Cart</Item>
           <Item icon={<LogoutOutlined />} onClick={logout}>
             Logout
