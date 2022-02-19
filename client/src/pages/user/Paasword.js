@@ -17,6 +17,7 @@ const Password = () => {
       .then(() => {
         //
         setLoading(false);
+        setPassword("");
         toast.success("Password Updated")
       })
       .catch((err) => {
@@ -36,10 +37,11 @@ const Password = () => {
           placeholder="Enter New Password"
           autoFocus
           disabled={loading}
+          value={password}
         />
         <button 
         className="btn btn-primary mt-2"
-        disabled={!password|| loading}
+        disabled={!password|| password.length<6|| loading}
         >
             Submit
             </button>
@@ -54,7 +56,7 @@ const Password = () => {
           <UserNav />
         </div>
         <div className="col-md-4 ">
-            {loading ? <h4 className="danger">Loading...</h4> : <h4>Password Update</h4>}
+            {loading ? <h4 className="danger" >Loading...</h4> : <h4>Password Update</h4>}
           
           {passwordUpdateForm()}
         </div>
