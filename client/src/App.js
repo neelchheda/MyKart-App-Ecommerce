@@ -46,9 +46,9 @@ const App = () => {
           .catch((err) => console.log(err));
       }
     });
-    // cleanup
+    // cleanup 
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   
   return (
