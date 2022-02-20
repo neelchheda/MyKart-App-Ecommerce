@@ -48,7 +48,7 @@ const Login = ({ history }) => {
             payload: {
               name: res.data.name,
               email: res.data.email,
-              token: idTokenResult,
+              token: idTokenResult.token,
               role: res.data.role,
               _id: res.data._id,
             },
@@ -79,7 +79,7 @@ const Login = ({ history }) => {
               payload: {
                 name: res.data.name,
                 email: res.data.email,
-                token: idTokenResult,
+                token: idTokenResult.token,
                 role: res.data.role,
                 _id: res.data._id,
               },
