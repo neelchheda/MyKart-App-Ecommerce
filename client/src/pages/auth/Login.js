@@ -20,7 +20,7 @@ const Login = ({ history }) => {
     if (user && user.token) {
       history.push("/");
     }
-  }, [user]);
+  }, [user,history]);
 
   let dispatch = useDispatch();
 
